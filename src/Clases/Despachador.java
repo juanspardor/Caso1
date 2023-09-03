@@ -6,62 +6,114 @@ public class Despachador extends Thread
 {
 	public static Bodega bodega;
 	public static CentroDistribucion centro = new CentroDistribucion();
+	public static Contador contador = new Contador();
 	
-	public Despachador()
+	public Producto aEnviar;
+	public int numAEntregar;
+	
+	public Despachador(int pNumAEntregar)
 	{
-		
+		aEnviar = null;
+		numAEntregar = pNumAEntregar;
 	}
 	
+	public void run()
+	{
+
+		while(contador.darEntregados() < numAEntregar)
+		{
+			System.out.println("Entro grande");
+			while(!bodega.hayProductos())
+			{
+				System.out.println("Despachador esperando productos para dar a repartidores...");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			Producto recibido = bodega.retirar();
+			centro.almacenar(recibido);
+		}
+		centro.finalizo();
+	}
 	public static void main(String[] args) 
 	{
+		//Se leen los datos de entrada
 		Scanner lector = new Scanner(System.in);
+		//Numero de productos
 		System.out.println("Por favor ingrese el numero de productos a producir: ");
 		int totalProductos = lector.nextInt();
+		
+		//Numero de productores
 		System.out.println("Por favor ingrese el numero de productores: ");
 		int numProductores = lector.nextInt();
+		
+		//Numero de repartidores
 		System.out.println("Por favor ingrese el numero de repartidores: ");
 		int numRepartidores = lector.nextInt();
+		
+		//TAM bodega
 		System.out.println("Por favor ingrese la capacidad de la bodega: ");
 		int tam = lector.nextInt();
 		
+		//Se calculan cuantos productos cada productor tiene que hacer
 		int undPProductor = totalProductos/numProductores;
+		//Extra por hay residuo en la division
 		int extra = totalProductos-undPProductor*numProductores;
 		
+		//Se crea la bodega con el TAM especificado
 		bodega = new Bodega(tam);
-//		for(int i = 1; i<=numProductores; i++)
-//		{
-//			if(i==numProductores)
-//			{
-//				Productor act = new Productor(i, undPProductor+extra, bodega);
-//				act.start();	
-//			}
-//			else
-//			{
-//				Productor act = new Productor(i, undPProductor, bodega);
-//				act.start();
-//			}
-//			
+		
+		Despachador des = new Despachador(totalProductos);
+		des.start();
+		
+		System.out.println("");
+		System.out.println("");
+		
+		for(int i = 1; i<=numProductores; i++)
+		{
+			if(i==numProductores)
+			{
+				Productor act = new Productor(i, undPProductor+extra, bodega, contador);
+				act.start();	
+			}
+			else
+			{
+				Productor act = new Productor(i, undPProductor, bodega, contador);
+				act.start();
+			}
+			
+		}
+		
+		for(int i = 1; i<= numRepartidores; i++)
+		{
+			Repartidor act = new Repartidor(centro, contador);
+			act.start();
+		}
+		
+		
+//		Productor p1 = new Productor(1, 1, bodega);
+//		Productor p2 = new Productor(2, 1, bodega);
+//		p1.start();
+//		p2.start();
+//		
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 //		}
-		
-		Productor p1 = new Productor(1, 1, bodega);
-		Productor p2 = new Productor(2, 1, bodega);
-		p1.start();
-		p2.start();
-		
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		bodega.retirar().despertar();
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		bodega.retirar().despertar();
+//		bodega.retirar().despertar();
+//		try {
+//			Thread.sleep(100);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		bodega.retirar().despertar();
 	
 
 	}

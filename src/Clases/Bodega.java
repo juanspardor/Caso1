@@ -27,32 +27,23 @@ public class Bodega
 				e.printStackTrace();
 			}
 		}
+		System.out.println("Se almaceno en bodega el producto "+productoNuevo.id + " producido por "+productoNuevo.producidorPor);
 		inventario.add(productoNuevo);
-		
 		
 		
 	}
 	
-	public void esperar(Producto pProducto)
-	{
-		try {
-			pProducto.wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	public synchronized Producto retirar()
 	{
 		Producto rta = inventario.pop();
-		System.out.println("Se saca el producto de: " +rta.producidorPor);
-		notify();
+		System.out.println("Se retiro de bodega el producto "+rta.id + " producido por "+rta.producidorPor);
+		notifyAll();
 		return rta;
 	}
 	
 	public synchronized boolean hayProductos()
 	{
-		return inventario.size() == 0;
+		return !(inventario.size() == 0);
 	}
 }
 

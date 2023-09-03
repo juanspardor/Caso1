@@ -5,17 +5,19 @@ public class CentroDistribucion
 	public Producto producto;
 	public boolean estadoSistema;
 	
+	
 	public CentroDistribucion()
 	{
 		producto = null;
-		boolean estadoSistema = false;
+		estadoSistema = false;
 	}
 	
 	public synchronized void almacenar(Producto pProducto)
 	{
-		while(producto==null)
+		while(producto!=null)
 		{
 			try {
+				System.out.println("El despachador se durmio en el C.D");
 				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -23,6 +25,7 @@ public class CentroDistribucion
 			}
 		}
 		
+		System.out.println("Se almaceno en CD el producto "+pProducto.id + " producido por "+pProducto.producidorPor);
 		producto = pProducto;
 		notify();
 	}
@@ -32,6 +35,7 @@ public class CentroDistribucion
 		while(producto==null)
 		{
 			try {
+				System.out.println("Repartidor intenta sacar");
 				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -39,15 +43,21 @@ public class CentroDistribucion
 			}
 		}
 		
+		
 		notifyAll();
 		Producto rta = producto;
 		producto = null;
+		if(rta != null)
+		{
+			System.out.println("Se retiro de C.D el producto "+rta.id + " producido por "+rta.producidorPor);	
+		}
 		return rta;
 	}
 	
 	public synchronized void finalizo()
 	{
+		System.out.println("Entramos a finalizar");
 		estadoSistema = true;
-		notifyAll();
+		notify();
 	}
 }
