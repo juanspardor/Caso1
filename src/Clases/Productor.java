@@ -22,11 +22,8 @@ public class Productor extends Thread
 		for(int i = 0; i<cantidadAProducir; i++)
 		{
 			producto = new Producto(contador.aumentarProducidos(), id);
-			synchronized(producto)
-			{
-				bodega.almacenar(producto);	//Este tiene un sync en clase Bodega (buffer)
-				producto.dormir(); //Este tiene un sync en la clase Producto
-			}
+			bodega.almacenar(producto);	//Este tiene un sync en clase Bodega (buffer)
+			producto.dormir(); //Este tiene un sync en la clase Producto
 		}
 		System.out.println("Termino el productor "+id);
 	}
