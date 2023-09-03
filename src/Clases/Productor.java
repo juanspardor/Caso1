@@ -22,7 +22,7 @@ public class Productor extends Thread
 			producto = new Producto(i, id);
 			synchronized(producto)
 			{
-				bodega.almacenar(producto);	
+				bodega.almacenar(producto);	//Este tiene un sync en clase Bodega (buffer)
 				producto.dormir(); //Este tiene un sync en la clase Producto
 			}
 			
