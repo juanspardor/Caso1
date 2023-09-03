@@ -15,6 +15,7 @@ public class Producto
 	public synchronized void dormir()
 	{
 		try {
+			System.out.println("Se durmio "+ producidorPor);
 			wait();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
