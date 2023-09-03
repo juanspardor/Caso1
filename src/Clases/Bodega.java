@@ -1,6 +1,5 @@
 package Clases;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Bodega 
@@ -18,31 +17,36 @@ public class Bodega
 	
 	public synchronized void almacenar(Producto productoNuevo)
 	{
-		while(inventario.size() == 0)
+		while(inventario.size() == capacidad)
 		{
 			try {
+				System.out.println("Se duerme el productor en bodega " + productoNuevo.producidorPor);
 				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
 		inventario.add(productoNuevo);
-		synchronized (productoNuevo)
-		{
-			try {
-				productoNuevo.wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
+		
+		
 	}
 	
+	public void esperar(Producto pProducto)
+	{
+		try {
+			pProducto.wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public synchronized Producto retirar()
 	{
 		Producto rta = inventario.pop();
+		System.out.println("Se saca el producto de: " +rta.producidorPor);
+		notify();
 		return rta;
 	}
 	

@@ -11,4 +11,20 @@ public class Producto
 		id = pId;
 		producidorPor = pProducidorPor;
 	}
+	
+	public synchronized void dormir()
+	{
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public synchronized void despertar()
+	{
+		notify();
+		System.out.println("Se desperto "+ producidorPor);
+	}
 }

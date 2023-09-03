@@ -1,55 +1,28 @@
 package Clases;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
-public class Bodega 
+public class Productor extends Thread
 {
-	public int capacidad;
+	public int id;
+	public int cantidadAProducir; 
+	private Producto producto;
+	public Bodega bodega;
 	
-	public LinkedList<Producto> inventario;
-	
-	public Bodega(int pCapacidad)
+	public Productor(int pId, int pCantidadAProducir, Bodega pBodega)
 	{
-		capacidad = pCapacidad;
-		inventario = new LinkedList<Producto>();
+		id = pId;
+		cantidadAProducir = pCantidadAProducir;
+		bodega = pBodega;
+		producto = null;
 	}
 	
-	
-	public synchronized void almacenar(Producto productoNuevo)
+	public void run()
 	{
-		while(inventario.size() == 0)
+		for(int i = 0; i<cantidadAProducir; i++)
 		{
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		inventario.add(productoNuevo);
-		synchronized (productoNuevo)
-		{
-			try {
-				productoNuevo.wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			producto = new Producto(i, id);
+			bodega.almacenar(producto);
+			
 		}
 	}
 	
-	public synchronized Producto retirar()
-	{
-		Producto rta = inventario.pop();
-		return rta;
-	}
-	
-	public synchronized boolean hayProductos()
-	{
-		return inventario.size() == 0;
-	}
 }
-
-
