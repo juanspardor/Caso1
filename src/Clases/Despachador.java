@@ -6,7 +6,7 @@ public class Despachador extends Thread
 {
 	public static Bodega bodega;
 	public static CentroDistribucion centro = new CentroDistribucion();
-	public static Contador contador = new Contador();
+	public static Contador contador;
 	
 	public Producto aEnviar;
 	public int numAEntregar;
@@ -19,25 +19,29 @@ public class Despachador extends Thread
 	
 	public void run()
 	{
-
-		while(contador.darEntregados() < numAEntregar)
+		boolean pararActivo = false;
+		while(!contador.verificarEstado())
 		{
-			System.out.println("Entro grande");
-			while(!bodega.hayProductos())
+			while(!bodega.hayProductos() && !pararActivo)
 			{
 				System.out.println("Despachador esperando productos para dar a repartidores...");
+				pararActivo = contador.pararBusqueda();
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(750);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			
-			Producto recibido = bodega.retirar();
-			centro.almacenar(recibido);
+			if(!pararActivo)
+			{
+				Producto recibido = bodega.retirar();
+				centro.almacenar(recibido);	
+			}
 		}
 		centro.finalizo();
+		
 	}
 	public static void main(String[] args) 
 	{
@@ -66,6 +70,8 @@ public class Despachador extends Thread
 		
 		//Se crea la bodega con el TAM especificado
 		bodega = new Bodega(tam);
+		
+		contador = new Contador(totalProductos);
 		
 		Despachador des = new Despachador(totalProductos);
 		des.start();

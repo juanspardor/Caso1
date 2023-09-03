@@ -4,9 +4,11 @@ public class Contador
 {
 	private int numProducidos;
 	private int numEntregados;
+	private int totales;
 	
-	public Contador()
+	public Contador(int pTotales)
 	{
+		totales = pTotales;
 		numProducidos = 0;
 		numEntregados = 0;
 	}
@@ -33,5 +35,14 @@ public class Contador
 		numEntregados++;
 		System.out.println("Productos entregados: "+numEntregados);
 		return numEntregados;
+	}
+	
+	public synchronized boolean pararBusqueda()
+	{
+		return numProducidos == totales;
+	}
+	public synchronized boolean verificarEstado()
+	{
+		return numEntregados == totales;
 	}
 }

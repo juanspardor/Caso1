@@ -6,7 +6,7 @@ public class Repartidor extends Thread
 	public CentroDistribucion cd;
 	public boolean faltan;
 	public Contador contador;
-	
+
 	public Repartidor(CentroDistribucion pCd, Contador pContador)
 	{
 		faltan = true;
@@ -14,13 +14,14 @@ public class Repartidor extends Thread
 		paquete = null;
 		contador = pContador;
 	}
-	
+
 	public void run()
 	{
 		while(faltan)
 		{
+
 			paquete = cd.retirar();
-			if(paquete!= null)
+			if(paquete!=null)
 			{
 				int duracion = (int) (Math.random() * (10-3)+3);
 				try {
@@ -31,13 +32,14 @@ public class Repartidor extends Thread
 				}	
 				paquete.despertar();
 				contador.aumentarEntregados();
+				faltan = !contador.verificarEstado();
 			}
-
 			else
 			{
-				System.out.println("Entre aca");
 				faltan = false;
 			}
+
+
 		}
 		System.out.println("Termino un repartidor ");
 	}

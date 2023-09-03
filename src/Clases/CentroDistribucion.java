@@ -32,17 +32,16 @@ public class CentroDistribucion
 	
 	public synchronized Producto retirar()
 	{
-		while(producto==null)
+		while(producto==null && !estadoSistema)
 		{
 			try {
-				System.out.println("Repartidor intenta sacar");
+				System.out.println("Repartidor intenta entrar");
 				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
+		}	
 		
 		notifyAll();
 		Producto rta = producto;
@@ -56,8 +55,14 @@ public class CentroDistribucion
 	
 	public synchronized void finalizo()
 	{
-		System.out.println("Entramos a finalizar");
+		System.out.println("Incia terminacion repartidores sobrantes");
 		estadoSistema = true;
-		notify();
+		notifyAll();
+
+	}
+	
+	public synchronized boolean darEstado()
+	{
+		return estadoSistema;
 	}
 }
