@@ -23,9 +23,9 @@ public class Repartidor extends Thread
 			paquete = cd.retirar();
 			if(paquete!=null)
 			{
-				int duracion = (int) (Math.random() * (10-3)+3);
+				int duracion = (int) (Math.random() * (5-3)+3);
 				try {
-					Thread.sleep(duracion*100);
+					Thread.sleep(duracion*1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
