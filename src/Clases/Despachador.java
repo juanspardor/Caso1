@@ -11,10 +11,10 @@ public class Despachador extends Thread
 	public Producto aEnviar;
 	public int numAEntregar;
 	
-	public Despachador(int pNumAEntregar)
+	public Despachador()
 	{
 		aEnviar = null;
-		numAEntregar = pNumAEntregar; //Se puede quitar
+	
 	}
 	
 	public void run()
@@ -76,7 +76,7 @@ public class Despachador extends Thread
 		
 		contador = new Contador(totalProductos);
 		
-		Despachador des = new Despachador(totalProductos);
+		Despachador des = new Despachador();
 		des.start();
 		
 		System.out.println("");

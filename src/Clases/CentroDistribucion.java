@@ -64,8 +64,4 @@ public class CentroDistribucion
 
 	}
 	
-	public synchronized boolean darEstado()
-	{
-		return estadoSistema;
-	}
 }
