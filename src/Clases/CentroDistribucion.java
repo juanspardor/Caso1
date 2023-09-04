@@ -25,7 +25,7 @@ public class CentroDistribucion
 			}
 		}
 		
-		System.out.println("Se almaceno en CD el producto "+pProducto.id + " producido por "+pProducto.producidorPor);
+		System.out.println("Se almaceno en CD el producto "+pProducto.id + " hecho por el productor "+pProducto.producidorPor);
 		producto = pProducto;
 		notify();
 	}
@@ -35,7 +35,6 @@ public class CentroDistribucion
 		while(producto==null && !estadoSistema)
 		{
 			try {
-				System.out.println("Repartidor intenta entrar");
 				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -43,7 +42,11 @@ public class CentroDistribucion
 			}
 		}	
 		
-		notifyAll();
+		if(!estadoSistema)
+		{
+			notifyAll();
+		}
+		
 		Producto rta = producto;
 		producto = null;
 		if(rta != null)
@@ -55,7 +58,7 @@ public class CentroDistribucion
 	
 	public synchronized void finalizo()
 	{
-		System.out.println("Incia terminacion repartidores sobrantes");
+		System.out.println("Incia terminacion de operadores (threads) faltantes/sobrantes");
 		estadoSistema = true;
 		notifyAll();
 

@@ -21,7 +21,7 @@ public class Contador
 	public synchronized int aumentarProducidos()
 	{
 		numProducidos++;
-		System.out.println("Productos producidos: "+numProducidos);
+		System.out.println("\n Numero total de productos producidos: "+numProducidos +"\n");
 		return numProducidos;
 	}
 	
@@ -33,7 +33,7 @@ public class Contador
 	public synchronized int aumentarEntregados()
 	{
 		numEntregados++;
-		System.out.println("Productos entregados: "+numEntregados);
+		System.out.println("\n Numero total de productos entregados: "+numEntregados +"\n");
 		return numEntregados;
 	}
 	

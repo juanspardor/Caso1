@@ -19,7 +19,16 @@ public class Productor extends Thread
 	
 	public void run()
 	{
-		for(int i = 0; i<cantidadAProducir; i++)
+		//Nos permite terminar los productores apenas terminen de producir los suyos, no implica una vuelta extra
+//		for(int i = 0; i<cantidadAProducir; i++)
+//		{
+//			producto = new Producto(contador.aumentarProducidos(), id);
+//			bodega.almacenar(producto);	//Este tiene un sync en clase Bodega (buffer)
+//			producto.dormir(); //Este tiene un sync en la clase Producto
+//		}
+//		
+		//Nos permite que se produzca un producto siempre y cuando hayan productos por producir y algun productor este despierto
+		while(!contador.pararBusqueda())
 		{
 			producto = new Producto(contador.aumentarProducidos(), id);
 			bodega.almacenar(producto);	//Este tiene un sync en clase Bodega (buffer)

@@ -14,17 +14,19 @@ public class Despachador extends Thread
 	public Despachador(int pNumAEntregar)
 	{
 		aEnviar = null;
-		numAEntregar = pNumAEntregar;
+		numAEntregar = pNumAEntregar; //Se puede quitar
 	}
 	
 	public void run()
 	{
 		boolean pararActivo = false;
+
 		while(!contador.verificarEstado())
 		{
-			while(!bodega.hayProductos() && !pararActivo)
+			//parar activo va primero porque no implica un llamado a un metodo
+			while(!pararActivo && !bodega.hayProductos())
 			{
-				System.out.println("Despachador esperando productos para dar a repartidores...");
+				System.out.println("...Despachador esperando productos para dar a repartidores...");
 				pararActivo = contador.pararBusqueda();
 				try {
 					Thread.sleep(750);
@@ -40,7 +42,7 @@ public class Despachador extends Thread
 				centro.almacenar(recibido);	
 			}
 		}
-		centro.finalizo();
+//		centro.finalizo();z
 		
 	}
 	public static void main(String[] args) 
@@ -65,6 +67,7 @@ public class Despachador extends Thread
 		
 		//Se calculan cuantos productos cada productor tiene que hacer
 		int undPProductor = totalProductos/numProductores;
+		
 		//Extra por hay residuo en la division
 		int extra = totalProductos-undPProductor*numProductores;
 		
@@ -96,7 +99,7 @@ public class Despachador extends Thread
 		
 		for(int i = 1; i<= numRepartidores; i++)
 		{
-			Repartidor act = new Repartidor(centro, contador);
+			Repartidor act = new Repartidor(centro, contador, i);
 			act.start();
 		}
 		

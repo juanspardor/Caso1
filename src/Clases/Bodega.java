@@ -20,14 +20,14 @@ public class Bodega
 		while(inventario.size() == capacidad)
 		{
 			try {
-				System.out.println("Se duerme el productor en bodega " + productoNuevo.producidorPor);
+				System.out.println("Se duerme el productor " + productoNuevo.producidorPor +"  en bodega");
 				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Se almaceno en bodega el producto "+productoNuevo.id + " producido por "+productoNuevo.producidorPor);
+		System.out.println("Se almaceno en bodega el producto "+productoNuevo.id + " hecho por el productor "+productoNuevo.producidorPor);
 		inventario.add(productoNuevo);
 		
 		
@@ -36,14 +36,14 @@ public class Bodega
 	public synchronized Producto retirar()
 	{
 		Producto rta = inventario.pop();
-		System.out.println("Se retiro de bodega el producto "+rta.id + " producido por "+rta.producidorPor);
-		notifyAll();
+		System.out.println("El despachador retiro de bodega el producto "+rta.id + " hecho por el productor "+rta.producidorPor);
+		notify();
 		return rta;
 	}
 	
 	public synchronized boolean hayProductos()
 	{
-		return !(inventario.size() == 0);
+		return (inventario.size() != 0);
 	}
 }
 
