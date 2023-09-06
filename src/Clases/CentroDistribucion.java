@@ -114,7 +114,7 @@ public class CentroDistribucion
 	public synchronized void finalizo()
 	{
 		//Se avisa por consola que termina la opracion
-		System.out.println("\nIncia terminacion de operadores (threads) faltantes/sobrantes:");
+		System.out.println("\nIncia terminacion de repartidores faltantes:");
 		
 		//La variable de estado de finalizacion toma el valor de verdadero
 		estadoSistema = true;

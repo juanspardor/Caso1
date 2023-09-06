@@ -71,10 +71,10 @@ public class Despachador extends Thread
 			if(!pararActivo)
 			{
 				//Retira el producto de bodega (aca se puede dormir)
-				Producto recibido = bodega.retirar();
+				aEnviar = bodega.retirar();
 				
 				//Almacena el producto en centro de distribucion
-				centro.almacenar(recibido);	
+				centro.almacenar(aEnviar);	
 			}
 			
 			//POSIBILIDAD 2: ya no tiene que intentar sacar productos de bodega porque ya se produjeron todos ==> no hace nada
@@ -82,6 +82,9 @@ public class Despachador extends Thread
 		
 		//Al salir de este ciclo significa que ya termino el sistema de funcionar, puede terminar su operacion
 		System.out.println("Termino el despachador");
+		
+		//Se inicia el proceso de terminar la ejecucion de los repartidores que se quedaron esperando producto
+		centro.finalizo();
 		
 	}
 	public static void main(String[] args) 

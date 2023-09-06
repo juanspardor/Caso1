@@ -54,6 +54,6 @@ public class Producto
 		notify();
 		
 		//Se avisa que se desperto el productor
-		System.out.println("Se desperto "+ producidorPor);
+		System.out.println("Se desperto el productor "+ producidorPor);
 	}
 }

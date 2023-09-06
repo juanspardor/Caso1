@@ -64,7 +64,7 @@ public class Repartidor extends Thread
 				
 				//Avisa que inicia su trayecto de delivery
 				System.out.println("El repartidor "+id + " empieza a repartir del producto " +paquete.id);
-				int duracion = (int) (Math.random() * (5-3)+3); //Se calcula el tiempo de entrega
+				int duracion = (int) (Math.random() * (10-3)+3); //Se calcula el tiempo de entrega
 				try 
 				{
 					Thread.sleep(duracion*1000); //El thread se duerme el tiempo que se demora en entregar
@@ -79,7 +79,7 @@ public class Repartidor extends Thread
 				contador.aumentarEntregados();
 				
 				//Avisa por consola que se entrego el producto
-				System.out.println("Se entrego el producto "+paquete.id + " producido por "+paquete.producidorPor);
+				System.out.println("Se entrego el producto "+paquete.id + " hecho por el productor "+paquete.producidorPor);
 				
 				//Despierta al productor que estaba dormido sobre el producto para que siga produciendo sus unidades faltantes
 				paquete.despertar();
@@ -87,11 +87,6 @@ public class Repartidor extends Thread
 				//Le pregunta al contador si faltan productos por entregar
 				faltan = !contador.verificarEstado();
 				
-				//Si no faltan: manda a todos los repartidores que faltan a recoger un null para que terminen su operacion
-				if(!faltan)
-				{
-					cd.finalizo();
-				}
 			}
 			
 			//POSIBILIDAD 2: el producto que recogio es null (ya no hay productos por entregar)
