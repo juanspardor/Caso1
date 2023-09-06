@@ -9,17 +9,17 @@ public class Contador
 	/**
 	 * Numero de productos producidos en cualquier momento de ejecucion
 	 */
-	public int numProducidos;
+	private int numProducidos;
 	
 	/**
 	 * Numero de productos entregados en cualquier momento de ejecucion
 	 */
-	public int numEntregados;
+	private int numEntregados;
 	
 	/**
 	 * Numero total de productos a producir y entregar
 	 */
-	public int totales;
+	private int totales;
 	
 	/**
 	 * Constructor

@@ -8,12 +8,12 @@ public class CentroDistribucion
 	/**
 	 * Unico producto que puede tener el centro de distribucion
 	 */
-	public Producto producto;
+	private Producto producto;
 	
 	/**
 	 * Variable que indica si ya se entregaron todos los productos a entregar
 	 */
-	public boolean estadoSistema;
+	private boolean estadoSistema;
 	
 	/**
 	 * Constructor. Se inicia con ningun producto, y con estado de finalizacion en falso

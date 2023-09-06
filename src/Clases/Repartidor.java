@@ -8,27 +8,27 @@ public class Repartidor extends Thread
 	/**
 	 * Producto que va a entregar
 	 */
-	public Producto paquete;
+	private Producto paquete;
 	
 	/**
 	 * Centro de distribucion de donde saca los productos
 	 */
-	public CentroDistribucion cd;
+	private CentroDistribucion cd;
 	
 	/**
 	 * Variable que indica si faltan productos por recogeer
 	 */
-	public boolean faltan;
+	private boolean faltan;
 	
 	/**
 	 * Contador global del sistema (le avisa si al entregar, si esa entrega fue la ultima y ya no hay mas por hacer)
 	 */
-	public Contador contador;
+	private Contador contador;
 	
 	/**
 	 * Id del repartidor
 	 */
-	public int id;
+	private int id;
 	
 	/**
 	 * Constructor del repartidor

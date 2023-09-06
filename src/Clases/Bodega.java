@@ -11,12 +11,12 @@ public class Bodega
 	/**
 	 * Capacidad de la bodega
 	 */
-	public int capacidad;
+	private int capacidad;
 	
 	/**
 	 * Productos que estan en inventario
 	 */
-	public LinkedList<Producto> inventario;
+	private LinkedList<Producto> inventario;
 	
 	/**
 	 * Constructor de la bodega

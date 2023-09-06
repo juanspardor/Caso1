@@ -7,22 +7,22 @@ public class Despachador extends Thread
 	/**
 	 * Bodega de productos. Es estatica para no tener que mandarselo al despachador como parametro
 	 */
-	public static Bodega bodega;
+	private static Bodega bodega;
 	
 	/**
 	 * Centro de distribucion de productos. Es estatico para no tener que mandarselo al despachador como parametro
 	 */
-	public static CentroDistribucion centro = new CentroDistribucion();
+	private static CentroDistribucion centro = new CentroDistribucion();
 	
 	/**
 	 * Contador general del sistema. Es estatico para no tener que mandarselo al despachador como parametro
 	 */
-	public static Contador contador;
+	private static Contador contador;
 	
 	/**
 	 * Producto a enviar a los repartidores
 	 */
-	public Producto aEnviar;
+	private Producto aEnviar;
 
 	/**
 	 * Constructor del despachador

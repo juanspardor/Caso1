@@ -8,27 +8,27 @@ public class Productor extends Thread
 	/**
 	 * Id del productor
 	 */
-	public int id;
+	private int id;
 	
 	/**
 	 * Cantidad de productos que este productor debe hacer
 	 */
-	public int cantidadAProducir; 
+	private int cantidadAProducir; 
 	
 	/**
 	 * Producto que acaba de producir y va a entregar en bodega
 	 */
-	public Producto producto;
+	private Producto producto;
 	
 	/**
 	 * Bodega en la que almacena productos
 	 */
-	public Bodega bodega;
+	private Bodega bodega;
 	
 	/**
 	 * Contador para asignar id a cada producto (para que quede en orden con respecto a los demas threads)
 	 */
-	public Contador contador;
+	private Contador contador;
 	
 	/**
 	 * Constructor
