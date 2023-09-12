@@ -54,15 +54,6 @@ public class Despachador extends Thread
 				//Mientras espera le pregunta al contador si mientras ha estado aca adentro se produjeron todos los productos a producir
 				pararActivo = contador.pararBusqueda();
 				
-				//Se duerme un ratico
-				try 
-				{
-					Thread.sleep(750);
-				} 
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
 			}
 			
 			//Al salir del while hay 2 posibilidades
@@ -119,9 +110,6 @@ public class Despachador extends Thread
 		//Se crea el contador con el total de productos a hacer y entregar
 		contador = new Contador(totalProductos);
 		
-		//Se crea el despachador y se pone a ejecutar
-		Despachador des = new Despachador();
-		des.start();
 		
 		System.out.println("");
 		System.out.println("");
@@ -143,6 +131,10 @@ public class Despachador extends Thread
 			}
 			
 		}
+		
+		//Se crea el despachador y se pone a ejecutar
+		Despachador des = new Despachador();
+		des.start();
 		
 		//Se crean los repartidores especificados y se ponen a correr
 		for(int i = 1; i<= numRepartidores; i++)
